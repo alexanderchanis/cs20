@@ -1,0 +1,22 @@
+Song {
+	display: block;
+	margin-bottom: 30px;
+	margin-left: 20px;
+}
+Name {
+	display: block;
+	color: #06F;
+	font-size: 28px;
+}
+Artist {
+	display: block;
+	margin-left: 15px;
+	color: #000;
+	font-size: 24px;
+}
+Year, Genre {
+	display: block;
+	color: #000;
+	margin-left: 20px;
+	font-size: 20px;
+}

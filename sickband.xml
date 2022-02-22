@@ -1,0 +1,65 @@
+<?xml version="1.0" ?>
+<?xml-stylesheet href="sickbandstyle.css"?>
+
+<Songs>
+	<Song>
+		<Name>Hate To See Your Heart Break</Name>
+		<Artist>Paramore</Artist>
+		<Year>2013</Year>
+		<Genre>Alternative, soft-rock</Genre>
+	</Song>
+	<Song>
+		<Name>Memories</Name>
+		<Artist>Maroon 5</Artist>
+		<Year>2020</Year>
+		<Genre>Pop</Genre>
+	</Song>
+	<Song>
+		<Name>Crazy</Name>
+		<Artist>Gnarls Barkley</Artist>
+		<Year>2006</Year>
+		<Genre>Neo-soul, funk</Genre>
+	</Song>
+	<Song>
+		<Name>Fernando</Name>
+		<Artist>ABBA</Artist>
+		<Year>1975</Year>
+		<Genre>Pop</Genre>
+	</Song>
+	<Song>
+		<Name>Good Riddance (Time of Your Life)</Name>
+		<Artist>Green Day</Artist>
+		<Year>2013</Year>
+		<Genre>Alternative-rock</Genre>
+	</Song>
+	<Song>
+		<Name>Ocean Eyes</Name>
+		<Artist>Billie Eilish</Artist>
+		<Year>2016</Year>
+		<Genre>Pop</Genre>
+	</Song>
+	<Song>
+		<Name>Levitating</Name>
+		<Artist>Dua Lipa</Artist>
+		<Year>2020</Year>
+		<Genre>Pop</Genre>
+	</Song>
+	<Song>
+		<Name>Knockin on Heaven's Door</Name>
+		<Artist>Bob Dylan</Artist>
+		<Year>1973</Year>
+		<Genre>Folk-rock</Genre>
+	</Song>
+	<Song>
+		<Name>I Call Your Name</Name>
+		<Artist>The Mamas &amp; The Papas</Artist>
+		<Year>1966</Year>
+		<Genre>Pop, R&amp;B</Genre>
+	</Song>
+	<Song>
+		<Name>California Dreamin'</Name>
+		<Artist>The Mamas &amp; The Papas</Artist>
+		<Year>1966</Year>
+		<Genre>Pop, R&amp;B</Genre>
+	</Song>
+</Songs>
