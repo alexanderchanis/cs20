@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+
+<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Lottery</title>
+
+<style>
+
+	h1 {
+		margin-left: 10%;
+		font-size: 75px;
+		font-family: Verdana, sans-serif;
+		color: #000;
+	}
+
+	p {
+		margin-left: 11%;
+		font-size: 40px;
+		font-family: Verdana, sans-serif;
+		color: #000;
+	}
+</style>
+
+</head>
+<body>
+	<script language="javascript">
+
+	const winning = [12, 15, 24, 35, 48];
+	winningString = winning.join(" ");
+	const winningLucky = 3;
+
+	pick = [];
+
+	lucky = Math.floor(Math.random() * 18) + 1;
+
+	for (i = 0; i < 5; i++) {
+
+		number = Math.floor(Math.random() * 48) + 1;
+		
+		while ( pick.includes(number) )
+			number = Math.floor(Math.random() * 48) + 1;
+
+		pick.push(number);
+	}
+
+	won = 0;
+	prize = 0;
+	luckyMatch = "does not match";
+	
+	for (i = 0; i < 5; i++) {
+		
+		if ( winning.includes(pick[i]) )
+			won += 10;		
+	}
+
+	if ( lucky == winningLucky ) {
+		won++;
+		luckyMatch = "matches";
+	}
+
+	switch (won) {
+		case 1 : prize = "$4"; break;
+		case 11 : prize = "$6";  break;
+		case 20 : prize = "$3";  break;
+		case 21 : prize = "$25";  break;
+		case 30 : prize = "$20";  break;
+		case 31 : prize = "$150";  break;
+		case 40 : prize = "$200";  break;
+		case 41 : prize = "$5000";  break;
+		case 50 : prize = "$25,000 a YEAR for LIFE";  break;
+		case 51 : prize = "$7,000 a WEEK for LIFE";
+	}
+
+	pickString = pick.join(" ");
+
+	pickSorted = pick.sort(function(a, b){return a - b});
+	sortedString = pickSorted.join(" ");
+
+	document.write("<h1>" + "Massachusetts Lottery LUCKY FOR LIFE!!!" + "</h1>");
+	document.write("<p>" + "My pick : " + pickString + " lucky " + lucky + "</p>");
+	document.write("<p>" + "My pick sorted : " + sortedString + " lucky " + lucky + "</p>");
+	document.write("<p>" + "Winning numbers : " + winningString + " lucky " + winningLucky + "</p>");
+	document.write("<p>" + "Numbers matching : " + Math.floor(won / 10) + "</p>");
+	document.write("<p>" + "Lucky ball " + luckyMatch + "</p>");
+	document.write("<p>" + "Your winnings : " + prize + "</p>");
+
+	</script>
+</body>
+</html>
