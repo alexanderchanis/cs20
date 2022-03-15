@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+	<title>FoodData Central API</title>
+        <style>
+        #data {
+                font-size: 20px;
+                line-height: 1.4em;
+                padding-left: 10%;
+        }
+        p {
+                padding-left: 5%;
+                font-size: 20px;
+                line-height: 1.3em;
+        }
+        h1 {
+                padding-left: 9%;
+        }
+        </style>
+	<meta charset="utf-8"/>
+	<script>
+		function getNutrients() {
+
+			request = new XMLHttpRequest();
+			console.log("1 - request object created");
+                        
+                        /* search for 'apple' products */
+		        request.open("GET", "https://api.nal.usda.gov/fdc/v1/foods/search?query=apple&api_key=220LgBqDaotSJgGr7LOUjWtLR6tWEnpH2oi1rDkI", true)
+
+			console.log("2 - opened request file");
+
+			request.onreadystatechange = function() {
+				console.log("3 - readystatechange event fired.");
+ 
+				if (request.readyState == 4 && request.status == 200) {
+
+					console.log("5 - response received");
+					result = request.responseText;
+					nutrients = JSON.parse(result);
+                                        
+                                        /* build result string and send to data div */
+					document.getElementById("data").innerHTML ="Query: 'apple'<br>First Result<br>FDC ID: " + nutrients.foods[0].fdcId
+                                        + "<br>Brand: " + nutrients.foods[0].brandOwner + "<br>Description: " +  nutrients.foods[0].description
+                                        + "<br>Iron Content: " +  nutrients.foods[0].foodNutrients[1].value + " " +  nutrients.foods[0].foodNutrients[1].unitName
+                                        + "<br><br>"; 
+					
+				}
+				else if (request.readyState == 4 && request.status != 200) {
+
+					document.getElementById("data").innerHTML = "Something is wrong!  Check the logs to see where this went off the rails";
+
+				}
+
+				else if (request.readyState == 3) {
+
+					document.getElementById("data").innerHTML = "Too soon!  Try again";
+
+				}
+
+			}
+			request.send();
+			console.log("4 - Request sent");
+		}
+	</script>
+</head>
+
+
+<body onload="getNutrients()">
+
+	<h1>Apple Nutrients</h1>
+	<div id="data">Loading...</div>
+        <p>I chose the Department of Agriculture's FoodData Central API. It returns information about all food products sold in the United States.
+        It includes brands, nutrients, descriptions, and identifying info such as FDC IDs for every product.<br><br>I found it on this website:
+        https://fdc.nal.usda.gov/api-guide.html<br><br>For the API request, I included a query, 'apple', which is a keyword that the API uses to find results,
+        and I included an API key, which allows me to access the API and request information.<br><br>This API would be helpful for any grocery store that
+        sells food, as they would easily be able to access information about their product. It would also be helpful for a diet planning app, as it would
+        be able to easily calculate nutrients goals and more.</p>
+</body>
+</html>
