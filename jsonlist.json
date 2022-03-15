@@ -67,18 +67,18 @@
   },
   {
     "name": "I Call Your Name",
-    "artist": "The Mamas & The Papas",
+    "artist": "The Mamas &amp; The Papas",
     "year": 1966,
     "genre": [
-      "Pop, R&B"
+      "Pop, R&amp;B"
     ]
   },
   {
     "name": "California Dreamin'",
-    "artist": "The Mamas & The Papas",
+    "artist": "The Mamas &amp; The Papas",
     "year": 1966,
     "genre": [
-      "Pop, R&B"
+      "Pop, R&amp;B"
     ]
   }
 ]
