@@ -1,0 +1,84 @@
+[
+  {
+    "name": "Hate To See Your Heart Break",
+    "artist": "Paramore",
+    "year": 2013,
+    "genre": [
+      "Alternative",
+      "Soft-rock"
+    ]
+  },
+  {
+    "name": "Memories",
+    "artist": "Maroon 5",
+    "year": 2020,
+    "genre": [
+      "Pop"
+    ]
+  },
+  {
+    "name": "Crazy",
+    "artist": "Gnarls Barkley",
+    "year": 2006,
+    "genre": [
+      "Neo-soul",
+      "Funk"
+    ]
+  },
+  {
+    "name": "Fernando",
+    "artist": "ABBA",
+    "year": 1975,
+    "genre": [
+      "Pop"
+    ]
+  },
+  {
+    "name": "Good Riddance (Time of Your Life)",
+    "artist": "Green Day",
+    "year": 2013,
+    "genre": [
+      "Alternative-rock"
+    ]
+  },
+  {
+    "name": "Ocean Eyes",
+    "artist": "Billie Eilish",
+    "year": 2016,
+    "genre": [
+      "Pop"
+    ]
+  },
+  {
+    "name": "Levitating",
+    "artist": "Dua Lipa",
+    "year": 2020,
+    "genre": [
+      "Pop"
+    ]
+  },
+  {
+    "name": "Knockin on Heaven's Door",
+    "artist": "Bob Dylan",
+    "year": 1973,
+    "genre": [
+      "Folk-rock"
+    ]
+  },
+  {
+    "name": "I Call Your Name",
+    "artist": "The Mamas & The Papas",
+    "year": 1966,
+    "genre": [
+      "Pop, R&B"
+    ]
+  },
+  {
+    "name": "California Dreamin'",
+    "artist": "The Mamas & The Papas",
+    "year": 1966,
+    "genre": [
+      "Pop, R&B"
+    ]
+  }
+]
