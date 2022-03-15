@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+	<title>JSON Setlist</title>
+	<meta charset="utf-8"/>
+        <style>
+        </style>
+	<script>
+                /* copied code from example in class to handle errors */
+		function loadMessages() {
+			request = new XMLHttpRequest();
+			console.log("1: created request");
+ 
+			request.open("GET", "https://alexanderchanis.github.io/cs20/jsonlist.json", true);
+
+			console.log("2: open success");
+
+			request.onreadystatechange = function() {
+				console.log("3:  event fired");
+			
+ 
+				if (request.readyState == 4 && request.status == 200) {
+
+					console.log("5:  data is ready");
+					theData = request.responseText;
+					returnHTML = theData;
+					data = JSON.parse(theData);
+					
+                                        /* print neatly using strHTML string */
+                                        strHTML = "<ul>";
+                                        
+					data.forEach(function(song) {
+                                          strGenres = song.genre.join(", ");
+					  strHTML += "<li>" + song.name + "<br>Artist: " + song.artist + "<br>Released " + song.year + "<br>Genre: " + strGenres + "</li><br>";
+					}) 
+                                        
+					strHTML += "</ul>";
+
+					document.getElementById("messages").innerHTML = returnHTML;
+                                        document.getElementById("display").innerHTML = strHTML;
+				}
+				else if (request.readyState == 4 && request.status != 200) {
+
+					document.getElementById("messages").innerHTML = "Whoops, something went terribly wrong!";
+
+				}
+
+				else if (request.readyState == 3) {
+
+					console.log("6:  ready state 3- request received,data being sent");
+					document.getElementById("messages").innerHTML = "Come back soon!";
+				}
+
+			}
+	
+			request.send();
+			console.log("4 request sent");
+		}
+	</script>
+</head>
+
+
+<body onload="loadMessages()">
+
+	<h1>Set List</h1>
+	<div id="messages">Loading...</div>
+        <div id="display">Loading...</div>
+        <form action="javascript:filter()">
+                <label for="genre">Pick a genre:</label>
+                <select id="genre" name="genre">
+                        <option value="Pop">Pop</option>
+                        <option value="R&B">R&B</option>
+                        <option value="Alternative">Alternative</option>
+                        <option value="Soft-rock">Soft-rock</option>
+                        <option value="Neo-soul">Neo-soul</option>
+                        <option value="Funk">Funk</option>
+                        <option value="Alternative-rock">Alternative-rock</option>
+                        <option value="Folk-rock">Folk-rock</option>
+                </select>
+                <input type="submit" value="Filter">
+        </form>
+        
+        <script>
+        /* filters what songs are displayed based on dropdown selection */
+        function filter() {
+                /* get value from form */
+                select = document.getElementById("genre").value;
+
+                strHTML = "<ul>";
+                
+                data.forEach(function(song) {
+                        /* checks if genre array includes user's choice */
+                        if ( song.genre.includes(select) ) {
+                                strGenres = song.genre.join(", ");
+                                strHTML += "<li>" + song.name + "<br>Artist: " + song.artist + "<br>Released " + song.year + "<br>Genre: " + strGenres + "</li><br>";
+                        }
+                }) 
+                        
+                strHTML += "</ul>";
+                
+                /* update display div */
+                document.getElementById("display").innerHTML = strHTML;
+        }
+        </script>
+</body>
+</html>
