@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style>
+.address {
+        display: none;
+}
+label {
+        display: inline-block;
+        min-width: 110px;
+}
+.desc {
+        display: inline-block;
+        min-width: 110px;
+}
+</style>
+<title>Jade Delight</title>
+</head>
+
+<body>
+<script>
+
+function MenuItem(name, cost)
+{
+	this.name = name;
+	this.cost=cost;
+}
+
+menuItems = new Array(
+	new MenuItem("Chicken Chop Suey", 4.5),
+	new MenuItem("Sweet and Sour Pork", 6.25),
+	new MenuItem("Shrimp Lo Mein", 6.25),
+	new MenuItem("Moo Shi Chicken", 7.5),
+	new MenuItem("Fried Rice", 2.85)
+);
+
+function makeSelect(name, minRange, maxRange)
+{
+	var t= "";
+	t = "<select name='" + name + "' size='1'>";
+	for (j=minRange; j<=maxRange; j++)
+	   t += "<option>" + j + "</option>";
+	t+= "</select>"; 
+	return t;
+}
+
+function td(content, className="")
+{
+	return "<td class = '" + className + "'>" + content + "</td>";
+}
+	
+</script>
+
+<h1>Jade Delight</h1>
+<form>
+
+<p class="userInfo"><label>First Name:</label> <input type="text"  name='fname' /></p>
+<p class="userInfo"><label>Last Name*:</label>  <input type="text"  name='lname' /></p>
+<p class="userInfo address"><label>Street*:</label> <input type="text" name='street' /></p>
+<p class="userInfo address"><label>City*:</label> <input type="text" name='city' /></p>
+<p class="userInfo"><label>Phone*:</label> <input type="text"  name='phone' /></p>
+<p> 
+	<input type="radio"  name="p_or_d" value = "pickup" checked="checked"/>Pickup  
+	<input type="radio"  name='p_or_d' value = 'delivery'/>
+	Delivery
+</p>
+<table border="0" cellpadding="3">
+  <tr>
+    <th>Select Item</th>
+    <th>Item Name</th>
+    <th>Cost Each</th>
+    <th>Total Cost</th>
+  </tr>
+<script>
+
+  var s = "";
+  for (i=0; i< menuItems.length; i++)
+  {
+	  s += "<tr>";
+	  s += td(makeSelect("quan" + i, 0, 10),"selectQuantity");
+	  s += td(menuItems[i].name, "itemName");
+	  s += td("$" +menuItems[i].cost.toFixed(2), "cost");
+	  s += td("$<input type='text' name='cost'/>", "totalCost");
+	  s+= "</tr>";
+  }
+  document.writeln(s);
+</script>
+</table>
+
+<p class="subtotal totalSection"><label>Subtotal:</label> 
+   $ <input type="text"  name='subtotal' id="subtotal" />
+</p>
+<p class="tax totalSection"><label>Mass tax 6.25%:</label>
+  $ <input type="text"  name='tax' id="tax" />
+</p>
+<p class="total totalSection"><label>Total:</label> $ <input type="text"  name='total' id="total" />
+</p>
+
+<input type = "button" value = "Submit Order" />
+
+</form>
+
+<script>
+
+/* add event listeners for change of drop down quantity selectors */
+for ( i = 0; i < menuItems.length; i++ ) {
+        document.getElementsByTagName('select')[i].addEventListener("change", updateTotals);
+}
+
+/* add event listener for delivery/pickup radio button change */
+document.getElementsByName('p_or_d')[0].addEventListener("change", toggleDelivery);
+document.getElementsByName('p_or_d')[1].addEventListener("change", toggleDelivery);
+
+inputs = document.getElementsByTagName('input');
+
+/* add event listener for submit button on click */
+for ( i = 0; i < inputs.length; i++ ) {
+        if ( inputs[i].type == 'button' ) {
+                inputs[i].addEventListener("click", verifyForm);
+        }
+}
+
+/* updates subtotal, tax, and total text boxes when drop down quantity is changed */
+function updateTotals() {
+
+        quantities = document.getElementsByTagName('select');
+        costs = document.getElementsByName('cost');
+        
+        subtotal = 0;
+        
+        /* sum for subtotal */
+        for ( i = 0; i < menuItems.length; i++ ) {
+                subtotal += quantities[i].value * menuItems[i].cost;
+                costs[i].value = parseFloat(quantities[i].value * menuItems[i].cost).toFixed(2);
+        }
+        
+        tax = subtotal * 0.0625;
+        total = subtotal + tax;
+        
+        /* update values on page with 2 decimal places */
+        document.getElementById('subtotal').value = parseFloat(subtotal).toFixed(2);
+        document.getElementById('tax').value = parseFloat(tax).toFixed(2);
+        document.getElementById('total').value = parseFloat(total).toFixed(2);
+}
+
+/* hides and reveals the city and street boxes on change of delivery/pickup 
+radio button */
+function toggleDelivery() {
+
+        /* choice is equal to the 'pickup' radio button */
+        choice = document.getElementsByName('p_or_d')[0];
+        address = document.getElementsByClassName("userInfo address");
+        
+        if ( choice.checked ) {
+                
+                for ( i = 0; i < address.length; i++ ) {
+                        address[i].style.display = 'none';
+                }
+                
+        } else {
+                
+                for ( i = 0; i < address.length; i++ ) {
+                        address[i].style.display = 'block';
+                }
+        }
+}
+
+/* verifies all of user's entered information, displays popup alert if successful 
+or unsuccessful */
+function verifyForm() {
+        
+        /* quantities is an array of the drop down food item elements */
+        quantities = document.getElementsByTagName('select');
+        
+        if ( !verifyLast() ) {
+                return;
+        }
+        
+        if ( !verifyPhone() ) {
+                return;
+        }
+        
+        readyTime = verifyAddress();
+        
+        /* confirms that a time was returned from verifyAddress */
+        if ( !readyTime ) {
+                return;
+        }
+        
+        if ( !verifyItems() ) {
+                return;
+        }
+        
+        alert("Thank you for your order!");
+        /*  creates confirm page in new window */
+        confirmPage(readyTime, quantities);
+}
+
+/* asserts that the last name entered is non-empty */
+function verifyLast() {
+        
+        lname = document.getElementsByName('lname')[0];
+        
+        if ( !lname.value ) {
+                alert("Please enter a last name");
+                return false;
+        }
+        
+        return true;
+}
+
+/* asserts that the phone number is 7 or 10 characters long */
+function verifyPhone() {
+        
+        phone = document.getElementsByName('phone')[0];
+        
+        if ( (phone.value.toString().length != 7) && (phone.value.toString().length != 10) ) {
+                alert("Please enter a valid phone number");
+                return false;
+        }
+        
+        return true;
+}
+
+/* asserts that the city and street is non-empty only if the delivery radio button 
+is toggled, also returns the ready time for the order depending on delivery/pickup radio
+choice */
+function verifyAddress() {
+        
+        city = document.getElementsByName('city')[0];
+        street = document.getElementsByName('street')[0];
+        /* delivery is equal to the delivery radio button */
+        delivery = document.getElementsByName('p_or_d')[1];
+        
+        currentTime = new Date();
+        /* default ready time is 15 minutes from present, changes to 30 minutes in 
+        conditional statement below if delivery radio is toggled */
+        readyTime = new Date(currentTime.getTime() + (15 * 60000));
+        
+        if ( delivery.checked ) {
+                if ( (!city.value) || (!street.value) ) {
+                        alert("Please enter an address for delivery");
+                        return;
+                }
+                
+                readyTime = new Date(currentTime.getTime() + (30 * 60000));
+                return readyTime;
+        }
+        
+        return readyTime;
+}
+
+/* asserts that at least 1 item of any type was ordered */
+function verifyItems() {
+        
+        ordered = false;
+        
+        for ( i = 0; i < quantities.length; i++ ) {
+                if ( quantities[i].value > 0 ) {
+                        ordered = true;
+                }
+        }
+        
+        if ( !ordered ) {
+                alert("Must order at least 1 item");
+        }
+        
+        return ordered;
+}
+
+/* creates a new order confirmation window and writes to it using a Window() 
+object */
+function confirmPage(readyTime, quantities) {
+        
+        confirm = window.open();
+        
+        confirm.document.write("<h1>Order Confirmation<h1>");
+        confirm.document.write("<h2>Items</h2>");
+        
+        /* loop creates each item name, its cost, and ordered quantity */
+        for ( i = 0; i < quantities.length; i++ ) {
+                
+                confirm.document.write("<p class='desc'>" + menuItems[i].name 
+                + " ($" + parseFloat(menuItems[i].cost).toFixed(2) + ") : </p>" + quantities[i].value);
+        }
+        
+        confirm.document.write("<h2>Subtotal</h2>");
+        confirm.document.write("<p>$" + parseFloat(subtotal).toFixed(2) + "</p>");
+        confirm.document.write("<h2>Mass. tax</h2>");
+        confirm.document.write("<p>$" + parseFloat(tax).toFixed(2) + "</p>");
+        confirm.document.write("<h2>Total</h2>");
+        confirm.document.write("<p>$" + parseFloat(total).toFixed(2) + "</p>");
+        
+        if ( delivery.checked ) {
+                confirm.document.write("<h2>Delivery Time</h2>");
+        } else {
+                confirm.document.write("<h2>Pickup Time</h2>");
+        }
+        
+        confirm.document.write("<p>" + readyTime + "</p>");
+}
+
+</script>
+
+</body>
+</html>
